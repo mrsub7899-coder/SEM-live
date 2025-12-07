@@ -1,0 +1,5 @@
+-- CreateEnum
+CREATE TYPE "Sex" AS ENUM ('MALE', 'FEMALE', 'TRANSMALE', 'TRANSFEMALE', 'NONBINARY', 'GENDERFLUID');
+
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "sex" "Sex";

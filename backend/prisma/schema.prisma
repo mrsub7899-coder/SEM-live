@@ -1,0 +1,127 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  name      String
+  role      UserRole   @default(USER)
+  credits   Int        @default(0)
+  chatPrice Int?         
+  rankPoints Int     @default(0)
+  rankLevel  Int     @default(1)
+  sessionsAsUser   Session[] @relation("UserSessions")
+  sessionsAsMaster Session[] @relation("MasterSessions")
+  tasksAssigned    Task[]    @relation("UserTasks")
+  taskTemplates TaskTemplate[] 
+  submissions      TaskSubmission[]
+  avatarUrl String?
+  sex        Sex?
+  chatAccessesAsUser   ChatAccess[] @relation("ChatAccessUser")
+  chatAccessesAsMaster ChatAccess[] @relation("ChatAccessMaster")
+  globalMessagesAsUser   GlobalChatMessage[] @relation("UserGlobalChat")
+  globalMessagesAsMaster GlobalChatMessage[] @relation("MasterGlobalChat")
+  globalMessagesSent     GlobalChatMessage[] @relation("SenderGlobalChat")
+  isOnline   Boolean   @default(false)
+  lastSeen   DateTime?
+}
+
+enum Sex {
+  MALE
+  FEMALE
+  TRANSMALE
+  TRANSFEMALE
+  NONBINARY
+  GENDERFLUID
+}
+
+enum UserRole {
+  USER
+  MASTER
+}
+
+model Session {
+  id         String         @id @default(uuid())
+  userId     String
+  masterId   String
+  submissions    TaskSubmission[]
+  status     SessionStatus  @default(ACTIVE)
+  user       User           @relation("UserSessions", fields: [userId], references: [id])
+  master     User           @relation("MasterSessions", fields: [masterId], references: [id])
+  tasks      Task[]
+}
+
+enum SessionStatus {
+  ACTIVE
+  CLOSED
+}
+
+model Task {
+  id          String       @id @default(uuid())
+  sessionId   String
+  title       String
+  description String
+  bounty      Int
+  userId    String
+  user      User   @relation("UserTasks", fields: [userId], references: [id])
+  status      TaskStatus   @default(PENDING)
+  session     Session      @relation(fields: [sessionId], references: [id])
+  submissions TaskSubmission[]
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+model TaskSubmission {
+  id           String   @id @default(uuid())
+  taskId       String
+  userId       String
+  sessionId    String
+  stakeCredits Int
+  proofUrl     String?
+  proofType    String?
+  task         Task     @relation(fields: [taskId], references: [id])
+  user         User     @relation(fields: [userId], references: [id])
+  session      Session  @relation(fields: [sessionId], references: [id])
+}
+
+model TaskTemplate {
+  id          String   @id @default(uuid())
+  masterId    String
+  title       String
+  description String
+  bounty      Int      @default(10)
+  master      User     @relation(fields: [masterId], references: [id])
+  createdAt   DateTime @default(now())
+}
+
+model ChatAccess {
+  id        String   @id @default(uuid())
+  userId    String
+  masterId  String
+  createdAt DateTime @default(now())
+  user      User     @relation("ChatAccessUser", fields: [userId], references: [id])
+  master    User     @relation("ChatAccessMaster", fields: [masterId], references: [id])
+}
+
+model GlobalChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  masterId  String
+  senderId  String
+  text      String
+  createdAt DateTime @default(now())
+  user      User     @relation("UserGlobalChat", fields: [userId], references: [id])
+  master    User     @relation("MasterGlobalChat", fields: [masterId], references: [id])
+  sender    User     @relation("SenderGlobalChat", fields: [senderId], references: [id])
+}
