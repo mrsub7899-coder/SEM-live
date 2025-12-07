@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------------------------------
+   Base Theme
+------------------------------------------------------- */
+
+html,
+body {
+  @apply bg-black text-gray-100 antialiased;
+  scroll-behavior: smooth;
+}
+
+a {
+  @apply text-brand hover:text-brand-light transition-colors;
+}
+
+button {
+  @apply transition-colors;
+}
+
+/* -------------------------------------------------------
+   Scrollbar Styling (Chrome, Edge, Safari)
+------------------------------------------------------- */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-700 rounded-md;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-600;
+}
+
+/* -------------------------------------------------------
+   Chat UI Enhancements
+------------------------------------------------------- */
+
+.chat-bubble {
+  @apply px-3 py-2 rounded-lg max-w-xs text-sm;
+}
+
+.chat-bubble-user {
+  @apply bg-blue-600 text-white ml-auto;
+}
+
+.chat-bubble-other {
+  @apply bg-gray-800 text-gray-100 mr-auto;
+}
+
+.chat-sender-label {
+  @apply text-xs text-gray-400 mb-1;
+}
+
+/* -------------------------------------------------------
+   Layout Helpers
+------------------------------------------------------- */
+
+.container-page {
+  @apply max-w-5xl mx-auto px-6 py-8;
+}
+
+.card {
+  @apply bg-gray-900 border border-gray-800 rounded-xl p-6;
+}
+
+.card-hover {
+  @apply hover:bg-gray-800 transition;
+}
+
+.input {
+  @apply w-full px-3 py-2 bg-black border border-gray-700 rounded text-sm;
+}
+
+.input:focus {
+  @apply outline-none border-gray-500;
+}
+
+.btn {
+  @apply px-4 py-2 rounded text-sm font-medium transition;
+}
+
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-500 text-white;
+}
+
+.btn-secondary {
+  @apply bg-gray-800 hover:bg-gray-700 text-gray-200;
+}
+
+.btn-danger {
+  @apply bg-red-600 hover:bg-red-500 text-white;
+}
+
+/* -------------------------------------------------------
+   Animations
+------------------------------------------------------- */
+
+.fade-in {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* -------------------------------------------------------
+   Utility Overrides
+------------------------------------------------------- */
+
+input,
+textarea {
+  @apply bg-black border border-gray-700 rounded text-gray-100;
+}
+
+input::placeholder,
+textarea::placeholder {
+  @apply text-gray-500;
+}
+
+hr {
+  @apply border-gray-800;
+}
+
+@layer components {
+
+  /* Buttons */
+  .btn {
+    @apply px-4 py-2 rounded-md font-medium text-sm transition-colors;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand hover:bg-brand-light text-white;
+  }
+
+  .btn-secondary {
+    @apply btn bg-gray-800 hover:bg-gray-700 text-gray-200;
+  }
+
+  .btn-danger {
+    @apply btn bg-red-600 hover:bg-red-500 text-white;
+  }
+
+  .btn-outline {
+    @apply btn border border-gray-600 text-gray-200 hover:bg-gray-800;
+  }
+
+  /* Inputs */
+  .input {
+    @apply w-full px-3 py-2 bg-black border border-gray-700 rounded-md text-sm text-gray-100;
+  }
+
+  .input:focus {
+    @apply outline-none border-gray-500;
+  }
+
+  /* Cards */
+  .card {
+    @apply bg-gray-900 border border-gray-800 rounded-xl p-6;
+  }
+
+  .card-hover {
+    @apply hover:bg-gray-800 transition;
+  }
+
+  /* Badges */
+  .badge {
+    @apply inline-flex items-center px-2 py-1 rounded text-xs font-medium;
+  }
+
+  .badge-success {
+    @apply badge bg-green-600 text-white;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-500 text-black;
+  }
+
+  .badge-danger {
+    @apply badge bg-red-600 text-white;
+  }
+
+  .badge-info {
+    @apply badge bg-brand text-white;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply p-4 rounded-lg border text-sm;
+  }
+
+  .alert-success {
+    @apply alert bg-green-900/30 border-green-700 text-green-300;
+  }
+
+  .alert-warning {
+    @apply alert bg-yellow-900/30 border-yellow-700 text-yellow-300;
+  }
+
+  .alert-danger {
+    @apply alert bg-red-900/30 border-red-700 text-red-300;
+  }
+
+  .alert-info {
+    @apply alert bg-brand-dark/30 border-brand-dark text-brand-light;
+  }
+
+  /* Modal */
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50;
+  }
+
+  .modal {
+    @apply bg-gray-900 border border-gray-700 rounded-xl p-6 w-full max-w-lg shadow-lg;
+  }
+
+  /* Navigation */
+  .sidebar {
+    @apply w-64 bg-gray-900 border-r border-gray-800 h-screen p-6 space-y-4;
+  }
+
+  .sidebar-link {
+    @apply block px-3 py-2 rounded-md text-gray-300 hover:bg-gray-800 hover:text-white transition;
+  }
+
+  /* Chat */
+  .chat-bubble {
+    @apply px-3 py-2 rounded-lg max-w-xs text-sm;
+  }
+
+  .chat-bubble-user {
+    @apply chat-bubble bg-blue-600 text-white ml-auto;
+  }
+
+  .chat-bubble-other {
+    @apply chat-bubble bg-gray-800 text-gray-100 mr-auto;
+  }
+
+  .chat-sender-label {
+    @apply text-xs text-gray-400 mb-1;
+  }
+  .page {
+    @apply max-w-5xl mx-auto px-6 py-8;
+  }
+
+  .section {
+    @apply mt-8 space-y-4;
+  }
+
+  .section-title {
+    @apply text-xl font-semibold mb-2;
+  }
+}
